@@ -1,0 +1,106 @@
+<div id="article" class="container">
+  <h1><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Ajouter un Article</button> </h1>
+  <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Nom</th>
+          <th scope="col">Unité</th>
+          <th scope="col">Quantité</th>
+          <th scope="col">Famille</th>
+          <th scope="col">Actif</th>
+          <th scope="col">Prix d'achat</th>
+          <th scope="col">Prix de vente</th>
+          <th scope="col">Marge</th>
+          <th scope="col">TVA</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of data">
+          <th scope="row">{{item._id}}</th>
+          <td>{{item.nom}}</td>
+          <td>{{item.unite}}</td>
+          <td>{{item.quantite}}</td>
+          <td>{{item.famille}}</td>
+          <td>{{item.actif?'Oui':'Non'}}</td>
+          <td>{{item.pa}}</td>
+          <td>{{item.pv}}</td>
+          <td>{{item.marge}}</td>
+          <td>{{item.tva}} %</td>
+          
+          <td><a (click)="deleteArticle(item._id)"><fa-icon [icon]="faTrashAlt"></fa-icon></a>
+            <a data-bs-toggle="modal" data-bs-target="#updateModal" (click)="loadArticle(item)"><fa-icon [icon]="faEdit"></fa-icon></a></td>
+        </tr>
+      </tbody>
+  </table>
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Ajouter un Article</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <label><b>Nom</b></label>
+            <input type="text" placeholder="Entrer le nom d'article" name="nom" [(ngModel)]="nom" required><br>
+            <label><b>Unité</b></label>
+            <input type="text" placeholder="Entrer l'unité" name="unite" [(ngModel)]="unite" required><br>
+            <label><b>Quantité</b></label>
+            <input type="text" placeholder="Entrer la quantité" name="quantite" [(ngModel)]="quantite" required><br>
+            <label><b>Famille</b></label>
+            <input type="text" placeholder="Entrer la famille" name="famille" [(ngModel)]="famille" required><br>
+            <label><b>Prix d'achat</b></label>
+            <input type="text" placeholder="Entrer le prix d'achat" name="pa" [(ngModel)]="pa" required><br>
+            <label><b>Prix de vente</b></label>
+            <input type="text" placeholder="Entrer le prix de vente" name="pv" [(ngModel)]="pv" required><br>
+            <label><b>Marge</b></label>
+            <input type="text" placeholder="Entrer le marge" name="marge" [(ngModel)]="marge" required><br>
+            <label><b>TVA</b></label>
+            <input type="text" placeholder="Entrer le TVA" name="tva" [(ngModel)]="tva" required><br>
+            <label><b>Actif</b></label>
+            <input type="checkbox" [(ngModel)]="actif">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+          <button type="button" class="btn btn-primary" (click)="addArticle()" data-bs-dismiss="modal">Ajouter</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="updateModalLabel">Modifier un Article</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <label><b>Nom</b></label>
+            <input type="text" placeholder="Entrer le nom d'article" name="nom" [(ngModel)]="nomup" required><br>
+            <label><b>Unité</b></label>
+            <input type="text" placeholder="Entrer l'unité" name="unite" [(ngModel)]="uniteup" required><br>
+            <label><b>Quantité</b></label>
+            <input type="text" placeholder="Entrer la quantité" name="quantite" [(ngModel)]="quantiteup" required><br>
+            <label><b>Famille</b></label>
+            <input type="text" placeholder="Entrer la famille" name="famille" [(ngModel)]="familleup" required><br>
+            <label><b>Prix d'achat</b></label>
+            <input type="text" placeholder="Entrer le prix d'achat" name="pa" [(ngModel)]="paup" required><br>
+            <label><b>Prix de vente</b></label>
+            <input type="text" placeholder="Entrer le prix de vente" name="pv" [(ngModel)]="pvup" required><br>
+            <label><b>Marge</b></label>
+            <input type="text" placeholder="Entrer le marge" name="marge" [(ngModel)]="margeup" required><br>
+            <label><b>TVA</b></label>
+            <input type="text" placeholder="Entrer le TVA" name="tva" [(ngModel)]="tvaup" required><br>
+            <label><b>Actif</b></label>
+            <input type="checkbox" name="tva" [(ngModel)]="actifup" required>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+          <button type="button" class="btn btn-primary" (click)="updateArticle()" data-bs-dismiss="modal">Modifier</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

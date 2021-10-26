@@ -1,0 +1,75 @@
+<div id="bcommande" class="container">
+    <h1><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="getClient()">Ajouter BC</button> </h1>
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">N°BC</th>
+            <th scope="col">Date</th>
+            <th scope="col">Client</th>
+            <th scope="col">Statut</th>
+            <th scope="col">Prix TTC</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of data">
+            <th scope="row">{{item.nbc}}</th>
+            <td>{{item.date}}</td>
+            <td>{{item.client}}</td>
+            <td>{{item.statut}}</td>
+            <td>{{item.prix}}</td>
+            
+            <td><a (click)="deletebc(item._id)"><fa-icon [icon]="faTrashAlt"></fa-icon></a>
+                <a data-bs-toggle="modal" data-bs-target="#updateModal" (click)="loadbc(item)"><fa-icon [icon]="faEdit"></fa-icon></a>
+                <a data-bs-toggle="modal" data-bs-target="#updateModal" (click)="loadbc(item)"><fa-icon [icon]="faInfoCircle"></fa-icon></a></td>
+          </tr>
+        </tbody>
+    </table>
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Ajouter une Bon de Commande</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <label><b>Client</b></label>
+                <ng-select  [(ngModel)]="client" [items]="clients" bindLabel="cinMF" bindValue="clt" appearence="outline" >
+                  choisir
+              </ng-select>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+              <button type="button" class="btn btn-primary" (click)="addbc()" data-bs-dismiss="modal">Ajouter</button>
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <!--<div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="updateModalLabel">Modifier une Bon de Commande</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <label><b>N°BC</b></label>
+                <input type="text" placeholder="Entrer le N° de Bon de Commande" name="nbc" [(ngModel)]="nbcup" required><br>
+                <label><b>Client</b></label>
+                <input type="text" placeholder="Entrer le Client" name="client" [(ngModel)]="clientup" required><br>
+                <label><b>statut</b></label>
+                <input type="text" placeholder="Entrer la statut" name="statut" [(ngModel)]="statutup" required><br>
+                <label><b>Prix</b></label>
+                <input type="text" placeholder="Entrer le prix" name="prix" [(ngModel)]="prixup" required><br>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+              <button type="button" class="btn btn-primary" (click)="updatebc()" data-bs-dismiss="modal">Modifier</button>
+            </div>
+          </div>
+        </div>
+    </div>
+    -->
+</div>
