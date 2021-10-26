@@ -1,0 +1,21 @@
+button{
+margin-bottom: 15px;
+margin-top: 22px;
+border-radius: 22.5px;
+float: right;
+font-size: smaller;
+background-color: #0276f8;
+    border-color: #0270ec;
+}
+
+
+
+
+.search {
+    top: 6px;
+    left: 10px
+}
+
+.form-control {
+    padding-left: 32px
+}

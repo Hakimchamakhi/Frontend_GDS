@@ -1,8 +1,14 @@
-<div id="article" class="container">
-  <h1><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Ajouter un Article</button> </h1>
-  <table class="table">
+<div id="article" class="container-fluid">
+
+     <div class="mb-2 d-flex justify-content-between align-items-center">
+      <div class="position-relative"> <span class="position-absolute search"><i class="fa fa-search"></i></span> <input class="form-control w-100" placeholder="Search by order#, name..."> </div>
+      <div class="px-2">   <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"> <i class="fa fa-tasks" aria-hidden="true"></i>
+        Ajouter un Article</button></div>
+  </div> 
+<div class="table-responsive">
+  <table class="table table-responsive table-borderless">
       <thead>
-        <tr>
+        <tr class="bg-light">
           <th scope="col">ID</th>
           <th scope="col">Nom</th>
           <th scope="col">Unité</th>
@@ -29,11 +35,13 @@
           <td>{{item.marge}}</td>
           <td>{{item.tva}} %</td>
           
-          <td><a (click)="deleteArticle(item._id)"><fa-icon [icon]="faTrashAlt"></fa-icon></a>
-            <a data-bs-toggle="modal" data-bs-target="#updateModal" (click)="loadArticle(item)"><fa-icon [icon]="faEdit"></fa-icon></a></td>
+          <td><a (click)="deleteArticle(item._id)" style="    margin-right: 11px;"><fa-icon [icon]="faTrashAlt" style="    color: red;
+            "></fa-icon></a>
+            <a data-bs-toggle="modal" data-bs-target="#updateModal" (click)="loadArticle(item)"><fa-icon [icon]="faEdit" style="    color: green;"></fa-icon></a></td>
         </tr>
       </tbody>
   </table>
+  </div>
   <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">

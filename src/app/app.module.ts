@@ -21,6 +21,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { FamilleArticleComponent } from './famille-article/famille-article.component';
+import { HomeappComponent } from './homeapp/homeapp.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { FamilleArticleComponent } from './famille-article/famille-article.compo
     BretourComponent,
     FactureComponent,
     AvoirComponent,
-    FamilleArticleComponent
+    FamilleArticleComponent,
+    HomeappComponent
   ],
   imports: [
     BrowserModule,

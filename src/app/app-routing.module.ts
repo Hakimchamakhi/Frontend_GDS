@@ -1,3 +1,4 @@
+import { HomeappComponent } from './homeapp/homeapp.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
@@ -16,6 +17,7 @@ import { FamilleArticleComponent } from './famille-article/famille-article.compo
 const routes: Routes = [
   {path:'login', component: LoginComponent},
   {path:'', component: HomeComponent, children:[
+    {path:'homeapp', component: HomeappComponent},
   {path:'article', component: ArticleComponent},
   {path:'famille-article', component: FamilleArticleComponent},
   {path:'fournisseur', component: FournisseurComponent},
