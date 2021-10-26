@@ -23,10 +23,15 @@ export class BcComponent implements OnInit {
   client:any;
   statut:any;
   prix:any;  
+  remise:any
+  tva:any
+  quantite:any
   nbcup:any;
   clientup:any;
   statutup:any;
   prixup:any;
+  articles=[{"nom":"", "qt":"1","prix":"","tva":"","remise":""}]
+  article={"nom":"", "qt":"1","prix":"","tva":"","remise":""}
   
 
   ngOnInit(): void {
