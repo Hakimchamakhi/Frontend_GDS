@@ -1,1 +1,92 @@
-<p>bl works!</p>
+<div id="bcommande" class="container">
+    <h1><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"
+        (click)="getClient()">Ajouter BC</button> </h1>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">N°BC</th>
+          <th scope="col">Date</th>
+          <th scope="col">Client</th>
+          <th scope="col">Statut</th>
+          <th scope="col">Prix TTC</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of data">
+          <th scope="row">{{item.nbc}}</th>
+          <td>{{item.date}}</td>
+          <td>{{item.client}}</td>
+          <td>{{item.statut}}</td>
+          <td>{{item.prix}}</td>
+  
+          <td><a (click)="deletebc(item._id)">
+              <fa-icon [icon]="faTrashAlt"></fa-icon>
+            </a>
+            <a data-bs-toggle="modal" data-bs-target="#updateModal" (click)="loadbc(item)">
+              <fa-icon [icon]="faEdit"></fa-icon>
+            </a>
+            <a data-bs-toggle="modal" data-bs-target="#updateModal" (click)="loadbc(item)">
+              <fa-icon [icon]="faInfoCircle"></fa-icon>
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <div class="modal fade " id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+      <div class="modal-dialog modal-xl" >
+        <div class="modal-content" >
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Ajouter une Bon de Commande</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <label><b>Client</b></label>
+            <ng-select [(ngModel)]="client" [items]="clients" bindLabel="cinMF" bindValue="cinMF"></ng-select>
+            <div *ngIf="client">
+              <h1><button type="button" class="btn btn-primary" (click)="addLine()">Ajouter Article</button>
+              </h1>
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Article</th>
+                    <th scope="col">Quantité</th>
+                    <th scope="col">Prix</th>
+                    <th scope="col">TVA</th>
+                    <th scope="col">Remise</th>
+                    <th scope="col">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of articles">
+                    <th scope="row"><ng-select [(ngModel)]="item.article" [items]="art" bindLabel="nom" bindValue="nom"  (change)="loadArticle(item)"></ng-select></th>
+                    <td><input type="text" name="quantite" [(ngModel)]="item.quantite" required></td>
+                    <td><input type="text" name="prix" [(ngModel)]="item.prix" required ></td>
+                    <td><input type="text" name="tva" [(ngModel)]="item.tva" required></td>
+                    <td><input type="text" name="remise" [(ngModel)]="item.remise" required></td>
+  
+                    <td>
+                      <a><fa-icon [icon]="faTrashAlt" (click)="deleteLine(item)"></fa-icon></a>
+                    </td>
+                  </tr>
+  
+                </tbody>
+              </table>
+            </div>
+            <div *ngIf="client">
+              <label>Prix HT: {{prixHT}} </label><br>
+              <label>TVA :  </label><br>
+              <label>Remise :  </label>
+              <input type="text" >
+              
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+            <button type="button" class="btn btn-primary" (click)="adlll()" data-bs-dismiss="modal">Ajouter</button>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, SimpleChanges } from '@angular/core';
 import { faTrashAlt, faEdit, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { AchatserviceService } from '../services/achatservice.service';
 import { TestserviceService } from '../services/testservice.service';
@@ -16,26 +16,66 @@ export class BcComponent implements OnInit {
   faInfoCircle=faInfoCircle;
   _id:any;
   data:any;
-  tdata:any;
+  tdata:any
+  art:any=[];
+  tart:any;
   clients:any
   tclients:any
-  nbc:any;
   client:any;
   statut:any;
-  prix:any;  
-  remise:any
-  tva:any
-  quantite:any
-  nbcup:any;
+  prix:any
   clientup:any;
   statutup:any;
   prixup:any;
-  articles=[{"nom":"", "qt":"1","prix":"","tva":"","remise":""}]
-  article={"nom":"", "qt":"1","prix":"","tva":"","remise":""}
+  articles:any=[]
+  prixHT:any;
+  sumtva:any
+  prixTTC:any
+  tva_0:any;
+  tva_7:any;
+  tva_10:any;
+  tva_13:any;
+  tva_19:any;
+  tva_29:any;
+  remiseTotal:any;
   
 
   ngOnInit(): void {
     this.getbc()
+    this.getArticle()
+  }
+  sumprix(){
+    this.prixHT=0
+    this.sumtva=0
+    this.prixTTC=0
+    this.tva_0=0
+    this.tva_7=0
+    this.tva_10=0
+    this.tva_13=0
+    this.tva_19=0
+    this.tva_29=0
+    this.remiseTotal=0
+
+    this.articles.map((i:any)=>{
+      this.prixHT+=Number((i.prix-i.remise)*i.quantite)
+      this.sumtva+=Number(i.tva/100*(i.prix-i.remise))*i.quantite
+      this.remiseTotal+=Number(i.remise*i.quantite)
+      if(i.tva==0){this.tva_0+=Number(i.prix*i.quantite)}
+      else if (i.tva==7){this.tva_7+=Number((i.prix-i.remise)*i.quantite)}
+      else if (i.tva==10){this.tva_10+=Number((i.prix-i.remise)*i.quantite)}
+      else if (i.tva==13){this.tva_13+=Number((i.prix-i.remise)*i.quantite)}
+      else if (i.tva==19){this.tva_19+=Number((i.prix-i.remise)*i.quantite)}
+      else if (i.tva==29){this.tva_29+=Number((i.prix-i.remise)*i.quantite)}
+    })
+    this.prixTTC=this.prixHT+this.sumtva
+  }
+  getArticle(){
+    this.service2.getArticle().subscribe(data=>{
+      this.tart=data
+      this.art=this.tart;
+    },error=>{
+      console.log(error);
+    })
   }
   getbc(){
     this.service.getbc().subscribe(data=>{
@@ -56,25 +96,63 @@ export class BcComponent implements OnInit {
 
   loadbc(item:any){
     this._id=item._id;
-    this.nbcup=item.nbc
     this.clientup=item.client
     this.statutup=item.statut
     this.prixup=item.prix
   }
+  loadArticle(item:any){
+    let x = this.art.filter((i:any)=>
+      i.nom==item.article)
+    this.art=this.tart.filter((i:any)=>{
+      let find=false
+        this.articles.forEach((el:any) =>{
+          if(el.article==i.nom){
+            find=true
+          }
+        });
+        return !find
+    })
+    item.prix=x[0]?.pv||0
+    item.tva=x[0]?.tva||0
+    this.sumprix()
+  }
 
   addbc(){
-    const body = {nbc:this.nbc, client:this.client, statut:this.statut, prix:this.prix}
+    const body = {client:this.client, articles:this.articles, prix:this.prixTTC}
     this.service.addbc(body).subscribe(data=>{
-      this.nbc=""
-      this.client=""
-      this.statut=""
-      this.prix=""
+      console.log(this.articles)
       this.getbc()
     })
   }
 
+  addLine(){
+    this.articles.push({
+      article:null,
+      quantite:1,
+      prix:"",
+      remise:0,
+      tva:0
+    })
+  }
+
+  deleteLine(item:any){
+    this.articles=this.articles.filter((i:any)=>
+      i!=item
+    )
+    this.art=this.tart.filter((i:any)=>{
+      let find=false
+        this.articles.forEach((el:any) =>{
+          if(el.article==i.nom){
+            find=true
+          }
+        });
+        return !find
+    })
+    this.sumprix()
+  }
+
   updatebc(){
-    const body = {_id:this._id, nbc:this.nbcup, client:this.clientup, statut:this.statutup, prix:this.prixup}
+    const body = {_id:this._id, client:this.clientup, statut:this.statutup, prix:this.prixup}
     this.service.updatebc(body).subscribe(data=>{  
       this.getbc()
     })

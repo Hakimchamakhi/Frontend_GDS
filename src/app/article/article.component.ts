@@ -15,6 +15,8 @@ export class ArticleComponent implements OnInit {
   _id:any;
   data:any;
   tdata:any;
+  fam:any;
+  tfam:any;
   nom:any;
   unite:any;
   quantite: any;
@@ -35,12 +37,22 @@ export class ArticleComponent implements OnInit {
   actifup: any;
   ngOnInit(): void {
     this.getArticle()
+    this.getFamille()
   }
   getArticle(){
     this.service.getArticle().subscribe(data=>{
       this.tdata=data
       this.data=this.tdata;
       
+    },error=>{
+      console.log(error);
+      
+    })
+  }
+  getFamille(){
+    this.service.getFamille().subscribe(data=>{
+      this.tfam=data
+      this.fam=this.tfam;
     },error=>{
       console.log(error);
       
