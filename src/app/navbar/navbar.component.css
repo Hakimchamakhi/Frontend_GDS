@@ -1,4 +1,34 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&family=Ubuntu:wght@300&display=swap');
+a{
+font-family: 'Poppins';
+}
 #li{
     margin-right: 14px;
     
 }
+.bg-light{
+    background-color: #43b9a9!important;
+}
+.navbar-light .navbar-nav .nav-link{
+    color: white;
+}
+ul{
+    background-color: #43b9a9;
+    border-color: #43b9a9;
+}
+ul>li>a{
+    color: white;
+}
+#dropdownUser2{
+    color:white
+}
+#mar{
+    margin-right: 15px;
+
+}
+
+.dropdown-item:hover {
+    color: #16181b;
+    text-decoration: none;
+    background-color: #070707;
+  }

@@ -1,6 +1,13 @@
+import { FouService } from './../services/fou.service';
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { faTrashAlt, faEdit } from '@fortawesome/free-solid-svg-icons';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { AuthServiceService } from '../services/auth-service.service';
 import { TestserviceService } from '../services/testservice.service';
+import { TokenStorageService } from '../services/token-storage.service';
+import { Notyf } from 'notyf';
 
 @Component({
   selector: 'app-fournisseur',
@@ -8,76 +15,72 @@ import { TestserviceService } from '../services/testservice.service';
   styleUrls: ['./fournisseur.component.css']
 })
 export class FournisseurComponent implements OnInit {
-
-  constructor(private service:TestserviceService) { }
-  faTrashAlt= faTrashAlt;
-  faEdit= faEdit;
-  _id:any;
-  raisonS:any;
-  tel:any;
-  email:any;
-  adresse:any;
-  cinMF:any;
+  fouform: FormGroup;
+  user:any;
   data:any;
-  tdata:any;
-  actif:any;
-  raisonSup:any;
-  telup:any;
-  emailup:any;
-  adresseup:any;
-  cinMFup:any;
-  dataup:any;
-  tdataup:any;
-  actifup:any;
-
+  constructor(private token: TokenStorageService  , private fb: FormBuilder, private route: ActivatedRoute , private router: Router, private fservice: FouService ) { }
   ngOnInit(): void {
-    this.getFournisseur()
+    this.user = this.token.getUser();
+
+    this.getallfou(this.user.id);
+    this.fouform = this.fb.group({
+      cinMF: ['', Validators.required],
+      email: ['', Validators.required],
+      raisonS: ['', Validators.required],
+      telephone: ['', Validators.required],
+      actif: [false, Validators.required],
+      adresse: ['', Validators.required],
+      adminclient_id: [this.user.id, Validators.required],
+    })
   }
-getFournisseur(){
-  this.service.getFournisseur().subscribe(data=>{
-    this.tdata=data
-    this.data=this.tdata;
-    
+
+  onsubmit(){
+    const notyf = new Notyf({
+      duration: 4000,
+      position: {
+        x: 'right',
+        y: 'top',
+      },
+      types: [
+        {
+          type: 'warning',
+          background: 'orange',
+          icon: {
+            className: 'material-icons',
+            tagName: 'i',
+            text: 'warning'
+          }
+        },
+        {
+          type: 'error',
+          background: 'red',
+          duration: 2000,
+          dismissible: true
+        }
+      ]
+    });
+    this.fservice.create(this.fouform.value).subscribe(
+      data => {
+        notyf.success('Fournisseure ajouté');
+        this.getallfou(this.user.id);
+
+      },
+      err => {
+        console.log(err);
+        
+        notyf.error(err.error.message);
+
+      }
+    );
+  }
+getallfou(id){
+  this.fservice.getall(id).subscribe(data=>{
+     this.data=data.data;
+     
   },error=>{
-    console.log(error);
-    
-  })
+
+  });
 }
 
-  addFournisseur(){
-    const body = {raisonS:this.raisonS,tel:this.tel,email:this.email,adresse:this.adresse,cinMF:this.cinMF, actif:this.actif}
-    this.service.addFournisseur(body).subscribe(data=>{
-      this.raisonS=""
-      this.tel=""
-      this.email=""
-      this.adresse=""
-      this.cinMF=""
-      this.actif=false
-    this.getFournisseur()
-    })
-  }
-
-  loadFournisseur(item:any){
-    this._id=item._id
-    this.raisonSup=item.raisonS
-    this.telup=item.tel
-    this.emailup=item.email
-    this.adresseup=item.adresse
-    this.cinMFup=item.cinMF
-    this.actifup=item.actif
-  }
-
-  updateFournisseur(){
-    const body = {_id:this._id, raisonS:this.raisonSup,tel:this.telup,email:this.emailup,adresse:this.adresseup,cinMF:this.cinMFup, actif:this.actifup}
-    this.service.updateFournisseur(body).subscribe(data=>{  
-      this.getFournisseur()
-    })
-  }
-
-  deleteFournisseur(_id:any){
-    this.service.deleteFournisseur(_id).subscribe(data=>{
-      this.getFournisseur()
-    })
-  }
 
 }
