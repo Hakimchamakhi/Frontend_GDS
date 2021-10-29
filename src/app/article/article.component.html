@@ -57,7 +57,7 @@
             <label><b>Quantité</b></label>
             <input type="text" placeholder="Entrer la quantité" name="quantite" [(ngModel)]="quantite" required><br>
             <label><b>Famille</b></label>
-            <input type="text" placeholder="Entrer la famille" name="famille" [(ngModel)]="famille" required><br>
+            <ng-select [(ngModel)]="famille" [items]="fam" bindLabel="nom" bindValue="nom"></ng-select><br>
             <label><b>Prix d'achat</b></label>
             <input type="text" placeholder="Entrer le prix d'achat" name="pa" [(ngModel)]="pa" required><br>
             <label><b>Prix de vente</b></label>
@@ -92,7 +92,7 @@
             <label><b>Quantité</b></label>
             <input type="text" placeholder="Entrer la quantité" name="quantite" [(ngModel)]="quantiteup" required><br>
             <label><b>Famille</b></label>
-            <input type="text" placeholder="Entrer la famille" name="famille" [(ngModel)]="familleup" required><br>
+            <ng-select [(ngModel)]="familleup" [items]="fam" bindLabel="nom" bindValue="nom"></ng-select><br>
             <label><b>Prix d'achat</b></label>
             <input type="text" placeholder="Entrer le prix d'achat" name="pa" [(ngModel)]="paup" required><br>
             <label><b>Prix de vente</b></label>
