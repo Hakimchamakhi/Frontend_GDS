@@ -1,10 +1,14 @@
-<div id="fournisseur" class="container">
-    <h1><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-        Ajouter un Fournisseur
-      </button> </h1>
-    <table class="table">
+<div id="fournisseur" class="container-fluid">
+
+  <div class="mb-2 d-flex justify-content-between align-items-center">
+    <div class="position-relative"> <span class="position-absolute search"><i class="fa fa-search"></i></span> <input class="form-control w-100" placeholder="    Chercher..."> </div>
+    <div class="px-2">   <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"> <i class="fa fa-tasks" aria-hidden="true"></i>
+      Ajouter un Fournisseur</button></div>
+</div> 
+<div class="table-responsive">
+    <table class="table  table-responsive table-borderless">
         <thead>
-          <tr>
+          <tr class="bg-light">
             <th scope="col">ID</th>
             <th scope="col">Raison Social</th>
             <th scope="col">Addresse</th>
@@ -17,20 +21,32 @@
         </thead>
         <tbody>
           <tr >
-            <tr *ngFor="let item of data">
-              <th scope="row">{{item._id}}</th>
-              <td>{{item.raisonS}}</td>
-              <td>{{item.adresse}}</td>
-              <td>{{item.tel}}</td>
-              <td>{{item.email}}</td>
-              <td>{{item.cinMF}}</td>
-              <td>{{item.actif?'Oui':'Non'}}</td>
-            
-              <td><a (click)="deleteFournisseur(item._id)"><fa-icon [icon]="faTrashAlt"></fa-icon></a>
-                <a data-bs-toggle="modal" data-bs-target="#updateModal" (click)="loadFournisseur(item)"><fa-icon [icon]="faEdit"></fa-icon></a></td>
+            <tr  *ngFor="let item of data">
+            <td>{{item.id}}</td>
+            <td>{{item.raisonS}}</td>
+            <td>{{item.adresse}}</td>
+            <td>{{item.telephone}}</td>
+            <td>{{item.email}}</td>
+            <td>{{item.cinMF}}</td>
+            <td *ngIf="item.actif==true"><span class="badge badge-pill badge-secondary" style="background-color: green;">Actif</span></td>
+            <td *ngIf="item.actif==false"><span class="badge badge-pill badge-success"  style="background-color: red;">Non Actif</span> </td>
+
+           
+
+              <td>
+                <div class="row">
+                <div class="col">
+                  <i class="bi bi-trash-fill"></i> 
+                </div>
+                <div class="col">
+                  <i class="bi bi-trash-fill"></i> 
+                </div>
+              </div>
+              </td>
           </tr>
         </tbody>
     </table>
+    </div>
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
@@ -39,53 +55,39 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              <label><b>Raison Social</b></label>
-              <input type="text" placeholder="Entrer le Raison Social fournisseur" name="raisonsocial" [(ngModel)]="raisonS" required><br>
-              <label><b>Addresse</b></label>
-              <input type="text" placeholder="Entrer l'Addresse" name="adresse" [(ngModel)]="adresse" required><br>
-              <label><b>Téléphone</b></label>
-              <input type="text" placeholder="Entrer le numero de Téléphone" name="tel" [(ngModel)]="tel" required><br>
-              <label><b>E-mail</b></label>
-              <input type="text" placeholder="Entrer l'addresse e-mail" name="email" [(ngModel)]="email" required><br>
-              <label><b>Matricule Fiscale</b></label>
-              <input type="text" placeholder="Entrer le Matricule Fiscale" name="cinMF" [(ngModel)]="cinMF" required><br>
-              <label><b>Actif</b></label>
-              <input type="checkbox" name="actif" [(ngModel)]="actif"><br>
-            </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-            <button type="button" class="btn btn-primary"(click)="addFournisseur()" data-bs-dismiss="modal">Ajouter</button>
-            </div>
+              <form [formGroup]="fouform"  (ngSubmit)="onsubmit()">
+                  <div class="input-group mb-3">
+                      <span class="input-group" >Raison Social</span>
+                      <input type="text" class="form-control" placeholder="" aria-label="Username" aria-describedby="basic-addon1"  formControlName="raisonS" required>
+                    </div>
+                    <div class="input-group mb-3">
+                      <span class="input-group">E-mail</span>
+                      <input type="text" class="form-control" placeholder=" " aria-label="Username" aria-describedby="basic-addon1"  formControlName="email" required>
+                    </div>
+                    <div class="input-group mb-3">
+                      <span class="input-group" >Matricule Fiscale</span>
+                      <input type="text" class="form-control" placeholder=" " aria-label="Username" aria-describedby="basic-addon1"  formControlName="cinMF" required>
+                    </div>
+                    <div class="input-group mb-3">
+                      <span class="input-group" >Téléphone</span>
+                      <input type="Number" class="form-control" placeholder=" " aria-label="Username" aria-describedby="basic-addon1"  formControlName="telephone" required>
+                    </div>
+                    <div class="input-group mb-3">
+                      <span class="input-group" >Addresse</span>
+                      <input type="text" class="form-control" placeholder="" aria-label="Username" aria-describedby="basic-addon1"  formControlName="adresse" required>
+                    </div>
+                    <div class="input-group mb-3">
+                      <span class="input-group" >Actif</span>
+                      <input type="checkbox" class="form-check-input" id="exampleCheck1" formControlName="actif">
+                      <label class="form-check-label" for="exampleCheck1"></label>                  
+                      </div>               <hr>
+                      <button type="submit" class="btn btn-primary"   data-bs-dismiss="modal" id="btnp">Ajouter</button>
+
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="btnf">Annuler</button>
+          </form>
           </div>
         </div>
     </div>
 
-    <div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="updateModalLabel">Modifier un Fournisseur</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <label><b>Raison Social</b></label>
-            <input type="text" placeholder="Entrer le Raison Social fournisseur" name="raisonsocialup" [(ngModel)]="raisonSup" required><br>
-            <label><b>Addresse</b></label>
-            <input type="text" placeholder="Entrer l'Addresse" name="adresse" [(ngModel)]="adresseup" required><br>
-            <label><b>Téléphone</b></label>
-            <input type="text" placeholder="Entrer le numero de Téléphone" name="tel" [(ngModel)]="telup" required><br>
-            <label><b>E-mail</b></label>
-            <input type="text" placeholder="Entrer l'addresse e-mail" name="email" [(ngModel)]="emailup" required><br>
-            <label><b>Matricule Fiscale</b></label>
-            <input type="text" placeholder="Entrer le Matricule Fiscale" name="cinMF" [(ngModel)]="cinMFup" required><br>
-            <label><b>Actif</b></label>
-            <input type="checkbox" name="actif" [(ngModel)]="actifup"><br>
-          </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-          <button type="button" class="btn btn-primary"(click)="updateFournisseur()" data-bs-dismiss="modal">Modifier</button>
-          </div>
-        </div>
-      </div>
-  </div>
+ 
 </div>

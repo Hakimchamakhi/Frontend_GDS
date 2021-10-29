@@ -29,7 +29,7 @@
   }
   
   .solution_cards_box .solution_card:hover {
-    background: #309df0;
+    background: #43b9a9;
     color: #fff;
     transform: scale(1.1);
     z-index: 9;
