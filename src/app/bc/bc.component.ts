@@ -41,7 +41,7 @@ export class BcComponent implements OnInit {
   tva_29:any;
   remiseTotal:any;
   qtTotal:any;
-
+  bcdata:any;
   ngOnInit(): void {
     this.getbc()
     this.getArticle()
@@ -80,7 +80,13 @@ export class BcComponent implements OnInit {
     })
   }
   getbc(){
-   
+    this.service.getall().subscribe(data=>{
+      console.log(data);
+      
+      this.bcdata=data
+    },error=>{
+      console.log(error);
+    })
   }
   getClient(){
     this.service2.getall().subscribe(data=>{
@@ -91,6 +97,8 @@ export class BcComponent implements OnInit {
     })
   }
 
+
+  
   loadbc(item:any){
     this._id=item._id;
     this.clientup=item.client
@@ -117,7 +125,7 @@ export class BcComponent implements OnInit {
   addbc(){
 
     const sum = this.articles.reduce((sum, current) => sum + Number(current.quantite),0);
-    const body = {nbc:sum+"df",client_id:this.client, articles:this.articles, prixTtc:this.prixTTC, prixHt:this.prixHT,tvaTotal:this.sumtva,remise:this.remiseTotal}
+    const body = {nbc:sum+"dfsd",client_id:this.client, articles:this.articles, prixTtc:this.prixTTC, prixHt:this.prixHT,tvaTotal:this.sumtva,remise:this.remiseTotal}
     console.log(body);
     
     this.service.create(body).subscribe(data=>{

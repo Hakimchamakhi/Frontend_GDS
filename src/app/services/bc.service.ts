@@ -17,5 +17,9 @@ export class BcService {
     return this.http.post(this.AUTH_API + '/create', data, httpOptions);
   }
 
+  getall() {
+    return this.http.get(this.AUTH_API + '/getall', httpOptions);
+  }
+
 
 }
