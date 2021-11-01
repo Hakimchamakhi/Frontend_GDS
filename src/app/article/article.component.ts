@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { faTrashAlt, faEdit } from '@fortawesome/free-solid-svg-icons';
-import { TestserviceService } from '../services/testservice.service';
+import { ArticleService } from '../services/article.service';
+import { FamilleService } from '../services/famille.service';
 
 @Component({
   selector: 'app-article',
@@ -9,10 +10,10 @@ import { TestserviceService } from '../services/testservice.service';
 })
 export class ArticleComponent implements OnInit {
 
-  constructor(private service:TestserviceService) { }
+  constructor(private service:ArticleService, private service2: FamilleService) { }
   faTrashAlt= faTrashAlt;
   faEdit=faEdit;
-  _id:any;
+  id:any;
   data:any;
   tdata:any;
   fam:any;
@@ -40,31 +41,29 @@ export class ArticleComponent implements OnInit {
     this.getFamille()
   }
   getArticle(){
-    this.service.getArticle().subscribe(data=>{
-      this.tdata=data
+    this.service.getall().subscribe(data=>{
+      this.tdata=data.data
       this.data=this.tdata;
-      
+      console.log(data)
     },error=>{
       console.log(error);
-      
     })
   }
   getFamille(){
-    this.service.getFamille().subscribe(data=>{
-      this.tfam=data
+    this.service2.getall().subscribe(data=>{
+      this.tfam=data.data
       this.fam=this.tfam;
     },error=>{
       console.log(error);
-      
     })
   }
 
   loadArticle(item:any){
-    this._id=item._id;
+    this.id=item.id;
     this.nomup=item.nom
     this.uniteup=item.unite
     this.quantiteup=item.quantite
-    this.familleup=item.famille
+    this.familleup=item.famille.id
     this.paup=item.pa
     this.pvup=item.pv
     this.margeup=item.marge
@@ -72,14 +71,22 @@ export class ArticleComponent implements OnInit {
     this.actifup=item.actif
   }
   updateArticle(){
-    const body = {_id:this._id, nom:this.nomup, unite:this.uniteup, actif:this.actifup,quantite:this.quantiteup, famille:this.familleup, pa:this.paup, pv:this.pvup, marge:this.margeup, tva:this.tvaup}
-    this.service.updateArticle(body).subscribe(data=>{  
+    const body = { nom:this.nomup, unite:this.uniteup, actif:this.actifup, quantite:this.quantiteup, famille_id:this.familleup, pa:this.paup, pv:this.pvup, marge:this.margeup, tva:this.tvaup}
+    console.log(body);
+    
+    this.service.update(this.id,body).subscribe(data=>{  
       this.getArticle()
+      console.log(data);
+      
+    },error=>{
+      console.log(error);
+      
     })
   }
   addArticle(){
-    const body = {nom:this.nom, actif:this.actif, unite:this.unite, quantite:this.quantite, famille:this.famille, pa:this.pa, pv:this.pv, marge:this.marge, tva:this.tva}
-    this.service.addArticle(body).subscribe(data=>{
+    const body = {nom:this.nom, actif:this.actif, unite:this.unite, quantite:this.quantite, famille_id:this.famille, pa:this.pa, pv:this.pv, marge:this.marge, tva:this.tva}
+    console.log(body)
+    this.service.create(body).subscribe(data=>{
       this.nom=""
       this.unite=""
       this.quantite=""
@@ -93,8 +100,8 @@ export class ArticleComponent implements OnInit {
     })
   }
 
-  deleteArticle(_id:any){
-    this.service.deleteArticle(_id).subscribe(data=>{
+  deleteArticle(id:any){
+    this.service.delete(id).subscribe(data=>{
       this.getArticle()
     })
   }

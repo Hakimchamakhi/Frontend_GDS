@@ -8,7 +8,6 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class ArticleService {
-
   AUTH_API ="http://localhost:8010/api/article";
   constructor(private http: HttpClient) { }
 
@@ -20,6 +19,12 @@ export class ArticleService {
   getall(): Observable<any> {
     return this.http.get(this.AUTH_API + `/getall`,httpOptions);
   }
+
+  update(id,data): Observable<any> {
+    return this.http.put(this.AUTH_API + `/update/${id}`, data, httpOptions);
+  }
+
+  delete(id): Observable<any> {
+    return this.http.delete(this.AUTH_API + '/delete/'+id, httpOptions);
+  }
 }
-
-

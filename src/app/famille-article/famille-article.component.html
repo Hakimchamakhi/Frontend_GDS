@@ -12,12 +12,11 @@
         </thead>
         <tbody>
           <tr *ngFor="let item of data">
-            <th scope="row">{{item._id}}</th>
+            <th scope="row">{{item.id}}</th>
             <td>{{item.codefam}}</td>
             <td>{{item.nom}}</td>
             <td>{{item.actif?'Oui':'Non'}}</td>
-            
-            <td><a (click)="deleteFamille(item._id)"><fa-icon [icon]="faTrashAlt"></fa-icon></a>
+            <td><a (click)="deleteFamille(item.id)"><fa-icon [icon]="faTrashAlt"></fa-icon></a>
               <a data-bs-toggle="modal" data-bs-target="#updateModal" (click)="loadFamille(item)"><fa-icon [icon]="faEdit"></fa-icon></a></td>
           </tr>
         </tbody>

@@ -1,7 +1,8 @@
 import { Component, OnInit, SimpleChanges } from '@angular/core';
 import { faTrashAlt, faEdit, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { AchatserviceService } from '../services/achatservice.service';
-import { TestserviceService } from '../services/testservice.service';
+import { ArticleService } from '../services/article.service';
+import { ClientService } from '../services/client.service';
 
 @Component({
   selector: 'app-bc',
@@ -10,7 +11,7 @@ import { TestserviceService } from '../services/testservice.service';
 })
 export class BcComponent implements OnInit {
 
-  constructor(private service: AchatserviceService, private service2: TestserviceService) { }
+  constructor(private service: AchatserviceService, private service2: ClientService, private service3: ArticleService) { }
   faTrashAlt= faTrashAlt;
   faEdit=faEdit;
   faInfoCircle=faInfoCircle;
@@ -57,8 +58,8 @@ export class BcComponent implements OnInit {
     this.remiseTotal=0
 
     this.articles.map((i:any)=>{
-      this.prixHT+=Number((i.prix-i.remise)*i.quantite)
-      this.sumtva+=Number(i.tva/100*(i.prix-i.remise))*i.quantite
+      this.prixHT+=Number((i.prix-i.remise)*i.quantite)//.toFixed(3)
+      this.sumtva+=(Number(i.tva/100*(i.prix-i.remise))*i.quantite)
       this.remiseTotal+=Number(i.remise*i.quantite)
       if(i.tva==0){this.tva_0+=Number(i.prix*i.quantite)}
       else if (i.tva==7){this.tva_7+=Number((i.prix-i.remise)*i.quantite)}
@@ -70,8 +71,8 @@ export class BcComponent implements OnInit {
     this.prixTTC=this.prixHT+this.sumtva
   }
   getArticle(){
-    this.service2.getArticle().subscribe(data=>{
-      this.tart=data
+    this.service3.getall().subscribe(data=>{
+      this.tart=data.data
       this.art=this.tart;
     },error=>{
       console.log(error);
@@ -86,8 +87,8 @@ export class BcComponent implements OnInit {
     })
   }
   getClient(){
-    this.service2.getClient().subscribe(data=>{
-      this.tclients=data
+    this.service2.getall().subscribe(data=>{
+      this.tclients=data.data
       this.clients=this.tclients
     },error=>{
       console.log(error);

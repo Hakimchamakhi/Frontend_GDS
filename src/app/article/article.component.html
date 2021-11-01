@@ -24,18 +24,18 @@
       </thead>
       <tbody>
         <tr *ngFor="let item of data">
-          <th scope="row">{{item._id}}</th>
+          <th scope="row">{{item.id}}</th>
           <td>{{item.nom}}</td>
           <td>{{item.unite}}</td>
           <td>{{item.quantite}}</td>
-          <td>{{item.famille}}</td>
+          <td>{{item.famille.codefam}}</td>
           <td>{{item.actif?'Oui':'Non'}}</td>
           <td>{{item.pa}}</td>
           <td>{{item.pv}}</td>
           <td>{{item.marge}}</td>
           <td>{{item.tva}} %</td>
           
-          <td><a (click)="deleteArticle(item._id)" style="    margin-right: 11px;"><fa-icon [icon]="faTrashAlt" style="    color: red;
+          <td><a (click)="deleteArticle(item.id)" style="    margin-right: 11px;"><fa-icon [icon]="faTrashAlt" style="    color: red;
             "></fa-icon></a>
             <a data-bs-toggle="modal" data-bs-target="#updateModal" (click)="loadArticle(item)"><fa-icon [icon]="faEdit" style="    color: green;"></fa-icon></a></td>
         </tr>
@@ -57,7 +57,7 @@
             <label><b>Quantité</b></label>
             <input type="text" placeholder="Entrer la quantité" name="quantite" [(ngModel)]="quantite" required><br>
             <label><b>Famille</b></label>
-            <ng-select [(ngModel)]="famille" [items]="fam" bindLabel="nom" bindValue="nom"></ng-select><br>
+            <ng-select [(ngModel)]="famille" [items]="fam" bindLabel="nom" bindValue="id"></ng-select><br>
             <label><b>Prix d'achat</b></label>
             <input type="text" placeholder="Entrer le prix d'achat" name="pa" [(ngModel)]="pa" required><br>
             <label><b>Prix de vente</b></label>
@@ -92,7 +92,7 @@
             <label><b>Quantité</b></label>
             <input type="text" placeholder="Entrer la quantité" name="quantite" [(ngModel)]="quantiteup" required><br>
             <label><b>Famille</b></label>
-            <ng-select [(ngModel)]="familleup" [items]="fam" bindLabel="nom" bindValue="nom"></ng-select><br>
+            <ng-select [(ngModel)]="familleup" [items]="fam" bindLabel="nom" bindValue="id"></ng-select><br>
             <label><b>Prix d'achat</b></label>
             <input type="text" placeholder="Entrer le prix d'achat" name="pa" [(ngModel)]="paup" required><br>
             <label><b>Prix de vente</b></label>
