@@ -43,7 +43,7 @@
         </div>
         <div class="modal-body">
           <label><b>Client</b></label>
-          <ng-select [(ngModel)]="client" [items]="clients" bindLabel="cinMF" bindValue="cinMF"></ng-select>
+          <ng-select [(ngModel)]="client" [items]="clients" bindLabel="cinMF" bindValue="id"></ng-select>
           <div *ngIf="client">
             <h1><button type="button" class="btn btn-primary" (click)="addLine()">Ajouter Article</button>
             </h1>
@@ -60,7 +60,7 @@
               </thead>
               <tbody>
                 <tr *ngFor="let item of articles">
-                  <th scope="row"><ng-select [(ngModel)]="item.article" [items]="art" bindLabel="nom" bindValue="nom"  (change)="loadArticle(item)"></ng-select></th>
+                  <th scope="row"><ng-select [(ngModel)]="item.article" [items]="art" bindLabel="nom" bindValue="id"  (change)="loadArticle(item)"></ng-select></th>
                   <td><input type="text" name="quantite" [(ngModel)]="item.quantite" (change)="sumprix()" required></td>
                   <td><input type="text" name="prix" [(ngModel)]="item.prix" (change)="sumprix()" required ></td>
                   <td><input type="text" name="tva" [(ngModel)]="item.tva" (change)="sumprix()" required></td>

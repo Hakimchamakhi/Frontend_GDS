@@ -1,3 +1,4 @@
+import { BcService } from './../services/bc.service';
 import { Component, OnInit, SimpleChanges } from '@angular/core';
 import { faTrashAlt, faEdit, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { AchatserviceService } from '../services/achatservice.service';
@@ -11,7 +12,7 @@ import { ClientService } from '../services/client.service';
 })
 export class BcComponent implements OnInit {
 
-  constructor(private service: AchatserviceService, private service2: ClientService, private service3: ArticleService) { }
+  constructor(private service: BcService, private service2: ClientService, private service3: ArticleService) { }
   faTrashAlt= faTrashAlt;
   faEdit=faEdit;
   faInfoCircle=faInfoCircle;
@@ -39,7 +40,7 @@ export class BcComponent implements OnInit {
   tva_19:any;
   tva_29:any;
   remiseTotal:any;
-  
+  qtTotal:any;
 
   ngOnInit(): void {
     this.getbc()
@@ -79,12 +80,7 @@ export class BcComponent implements OnInit {
     })
   }
   getbc(){
-    this.service.getbc().subscribe(data=>{
-    this.tdata=data
-    this.data=this.tdata;
-    },error=>{
-      console.log(error);
-    })
+   
   }
   getClient(){
     this.service2.getall().subscribe(data=>{
@@ -119,9 +115,14 @@ export class BcComponent implements OnInit {
   }
 
   addbc(){
-    const body = {client:this.client, articles:this.articles, prix:this.prixTTC}
-    this.service.addbc(body).subscribe(data=>{
-      console.log(this.articles)
+
+    const sum = this.articles.reduce((sum, current) => sum + Number(current.quantite),0);
+    const body = {nbc:sum+"df",client_id:this.client, articles:this.articles, prixTtc:this.prixTTC, prixHt:this.prixHT,tvaTotal:this.sumtva,remise:this.remiseTotal}
+    console.log(body);
+    
+    this.service.create(body).subscribe(data=>{
+      console.log(data);
+      
       this.getbc()
     })
   }
@@ -153,15 +154,10 @@ export class BcComponent implements OnInit {
   }
 
   updatebc(){
-    const body = {_id:this._id, client:this.clientup, statut:this.statutup, prix:this.prixup}
-    this.service.updatebc(body).subscribe(data=>{  
-      this.getbc()
-    })
+ 
   }
 
   deletebc(_id:any){
-    this.service.deletebc(_id).subscribe(data=>{
-      this.getbc()
-    })
+
   }
 }

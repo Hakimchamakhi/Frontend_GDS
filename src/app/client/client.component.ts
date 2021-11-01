@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { faTrashAlt, faEdit } from '@fortawesome/free-solid-svg-icons';
+import { ClientService } from '../services/client.service';
 import { TestserviceService } from '../services/testservice.service';
+import { TokenStorageService } from '../services/token-storage.service';
 
 @Component({
   selector: 'app-client',
@@ -9,7 +11,7 @@ import { TestserviceService } from '../services/testservice.service';
 })
 export class ClientComponent implements OnInit {
 
-  constructor(private service:TestserviceService) { }
+  constructor(private service:ClientService , private token: TokenStorageService) { }
   faTrashAlt= faTrashAlt;
   faEdit= faEdit;
   _id:any;
@@ -29,13 +31,14 @@ export class ClientComponent implements OnInit {
   dataup:any;
   tdataup:any;
   actifup:any;
-
+  user:any;
   ngOnInit(): void {
+    this.user = this.token.getUser();
     this.getClient()
   }
   getClient(){
-    this.service.getClient().subscribe(data=>{
-      this.tdata=data
+    this.service.getall().subscribe(data=>{
+      this.tdata=data.data
       this.data=this.tdata;
       
     },error=>{
@@ -44,7 +47,7 @@ export class ClientComponent implements OnInit {
     })
   }
   addClient(){
-    const body = {raisonS:this.raisonS,tel:this.tel,email:this.email,adresse:this.adresse,cinMF:this.cinMF, actif:this.actif}
+    const body = {raisonS:this.raisonS,tel:this.tel,email:this.email,adresse:this.adresse,cinMF:this.cinMF, actif:this.actif ,adminclient_id:this.user.id}
     this.service.addClient(body).subscribe(data=>{
       this.raisonS=""
       this.tel=""
@@ -56,9 +59,11 @@ export class ClientComponent implements OnInit {
     })
   }
   loadClient(item:any){
-    this._id=item._id
+    console.log(item);
+    
+    this._id=item.id
     this.raisonSup=item.raisonS
-    this.telup=item.tel
+    this.telup=item.telephone
     this.emailup=item.email
     this.adresseup=item.adresse
     this.cinMFup=item.cinMF
@@ -66,14 +71,18 @@ export class ClientComponent implements OnInit {
   }
 
   updateClient(){
-    const body = {_id:this._id, raisonS:this.raisonSup,tel:this.telup,email:this.emailup,adresse:this.adresseup,cinMF:this.cinMFup, actif:this.actifup}
-    this.service.updateClient(body).subscribe(data=>{  
+    const body = {raisonS:this.raisonSup,telephone:this.telup,email:this.emailup,adresse:this.adresseup,cinMF:this.cinMFup, actif:this.actifup,adminclient_id:this.user.id}
+    console.log(this._id);
+    
+    this.service.update(this._id,body).subscribe(data=>{  
       this.getClient()
     })
   }
 
   deleteClient(_id:any){
-    this.service.deleteClient(_id).subscribe(data=>{
+    console.log(_id);
+    
+    this.service.delete(_id).subscribe(data=>{
       this.getClient()
     })
   }
