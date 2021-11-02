@@ -49,7 +49,7 @@
     <div class="modal-dialog modal-xl" >
       <div class="modal-content" >
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Ajouter une Bon de Commande</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Ajouter un Bon de Commande</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
@@ -145,6 +145,7 @@
     </div>
   </div>
 
+<<<<<<< HEAD
 
   <div class="modal fade " id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
     <div class="modal-dialog modal-xl" >
@@ -228,15 +229,116 @@
                 </tbody>
               </table>
 
+=======
+  <div class="modal fade " id="updateModal" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true" >
+    <div class="modal-dialog modal-xl" >
+      <div class="modal-content" >
+        <div class="modal-header">
+          <h5 class="modal-title" id="updateModalLabel">Modifier un Bon de Commande</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <label><b>Client</b></label>
+          <ng-select [(ngModel)]="clientup" [items]="clients" bindLabel="cinMF" bindValue="id"  [compareWith]="compareWith"></ng-select>
+          <div *ngIf="clientup">
+            <h1><button type="button" class="btn btn-primary" (click)="addLine()">Ajouter Article</button>
+            </h1>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">Article</th>
+                  <th scope="col">Quantité</th>
+                  <th scope="col">Prix</th>
+                  <th scope="col">TVA</th>
+                  <th scope="col">Remise</th>
+                  <th scope="col">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of articlesup">
+                  <th scope="row"><ng-select [(ngModel)]="item.article" [items]="art" bindLabel="nom" bindValue="id"  (change)="loadArticle(item)"></ng-select></th>
+                  <td><input type="text" name="quantite" [(ngModel)]="item.quantite" (change)="sumprix()" required></td>
+                  <td><input type="text" name="prix" [(ngModel)]="item.prix" (change)="sumprix()" required ></td>
+                  <td><input type="text" name="tva" [(ngModel)]="item.tva" (change)="sumprix()" required></td>
+                  <td><input type="text" name="remise" [(ngModel)]="item.remise" (change)="sumprix()" required></td>
+
+                  <td>
+                    <a><fa-icon [icon]="faTrashAlt" (click)="deleteLine(item)"></fa-icon></a>
+                  </td>
+                </tr>
+
+              </tbody>
+            </table>
+          </div>
+          <div *ngIf="articlesup.length&&clientup">
+            <div class="table-responsive">
+              <table class="table table-responsive table-borderless" >
+                <thead>
+                  <tr>
+                    <th> Base HT </th>
+                    <th> TVA </th>
+                    <th> Montant TTC </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngIf="tva_0">
+                    <td>{{tva_0}} DT</td>
+                    <td>0%</td>
+                    <td>{{tva_0}}</td>
+                  </tr>
+                  <tr *ngIf="tva_7">
+                    <td>{{tva_7}} DT</td>
+                    <td>7%</td>
+                    <td>{{tva_7*1.07}}</td>
+                  </tr>
+                  <tr *ngIf="tva_10">
+                    <td>{{tva_10}} DT</td>
+                    <td>10%</td>
+                    <td>{{tva_10*1.1}}</td>
+                  </tr>
+                  <tr *ngIf="tva_13">
+                    <td>{{tva_13}} DT</td>
+                    <td>13%</td>
+                    <td>{{tva_13*1.13}}</td>
+                  </tr>
+                  <tr *ngIf="tva_19">
+                    <td>{{tva_19}} DT</td>
+                    <td>19%</td>
+                    <td>{{tva_19*1.19}}</td>
+                  </tr>
+                  <tr *ngIf="tva_29">
+                    <td>{{tva_29}} DT</td>
+                    <td>29%</td>
+                    <td>{{tva_29*1.29}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div>
+              <label>Prix HT: {{prixHT||0}} DT </label><br>
+              <label>TVA : {{sumtva||0}} DT </label><br>
+              <label>Remise : {{remiseTotal||0}} DT</label><br>
+              <label>Prix TTC: {{prixTTC||0}} DT </label>
+>>>>>>> 96ec0e2e3c8dccbe697a6c8b590da0fa0eefefc1
             </div>
           </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+<<<<<<< HEAD
           <button type="button" class="btn btn-primary" (click)="addbc()" data-bs-dismiss="modal">Ajouter</button>
+=======
+          <button type="button" class="btn btn-primary" (click)="updatebc()" data-bs-dismiss="modal">Modifier</button>
+>>>>>>> 96ec0e2e3c8dccbe697a6c8b590da0fa0eefefc1
         </div>
       </div>
     </div>
   </div>
+<<<<<<< HEAD
 </div>
 
+=======
+
+  
+</div>
+>>>>>>> 96ec0e2e3c8dccbe697a6c8b590da0fa0eefefc1

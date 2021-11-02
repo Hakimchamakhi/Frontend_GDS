@@ -21,7 +21,7 @@ export class BcComponent implements OnInit {
   faTrashAlt= faTrashAlt;
   faEdit=faEdit;
   faInfoCircle=faInfoCircle;
-  _id:any;
+  id:any;
   data:any;
   tdata:any
   art:any=[];
@@ -35,6 +35,8 @@ export class BcComponent implements OnInit {
   statutup:any;
   prixup:any;
   articles:any=[]
+  articlesup:any=[]
+  temparticlesup:any;
   prixHT:any;
   sumtva:any
   prixTTC:any
@@ -48,9 +50,11 @@ export class BcComponent implements OnInit {
   qtTotal:any;
   bcdata:any;
 
+  bcdataup:any;
   ngOnInit(): void {
     this.getbc()
     this.getArticle()
+    this.getClient()
   }
   sumprix(){
     this.prixHT=0
@@ -90,7 +94,6 @@ export class BcComponent implements OnInit {
   getbc(){
     this.service.getall().subscribe(data=>{
       console.log(data);
-      
       this.bcdata=data
     },error=>{
       console.log(error);
@@ -104,14 +107,25 @@ export class BcComponent implements OnInit {
       console.log(error);
     })
   }
-
-
+ compareWith(clientup,client){
+   return clientup.cinMF === client.cinMF
+ }
   
   loadbc(item:any){
-    this._id=item._id;
+    this.service.get(item.id).subscribe(data=>{
+      this.bcdataup=data;
+      this.temparticlesup=this.bcdataup.data.articles
+      console.log(this.temparticlesup)
+      this.temparticlesup.map((i:any)=>{
+        this.articlesup.push(i.BcArticle)
+      })
+      
+    },error=>{
+      console.log(error);
+    })
+    this.id=item.id;
     this.clientup=item.client
-    this.statutup=item.statut
-    this.prixup=item.prix
+    
   }
   loadArticle(item:any){
     console.log(item);
