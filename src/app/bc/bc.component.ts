@@ -16,7 +16,7 @@ export class BcComponent implements OnInit {
   faTrashAlt= faTrashAlt;
   faEdit=faEdit;
   faInfoCircle=faInfoCircle;
-  _id:any;
+  id:any;
   data:any;
   tdata:any
   art:any=[];
@@ -30,6 +30,7 @@ export class BcComponent implements OnInit {
   statutup:any;
   prixup:any;
   articles:any=[]
+  articlesup:any=[]
   prixHT:any;
   sumtva:any
   prixTTC:any
@@ -45,6 +46,7 @@ export class BcComponent implements OnInit {
   ngOnInit(): void {
     this.getbc()
     this.getArticle()
+    this.getClient()
   }
   sumprix(){
     this.prixHT=0
@@ -82,7 +84,6 @@ export class BcComponent implements OnInit {
   getbc(){
     this.service.getall().subscribe(data=>{
       console.log(data);
-      
       this.bcdata=data
     },error=>{
       console.log(error);
@@ -96,22 +97,21 @@ export class BcComponent implements OnInit {
       console.log(error);
     })
   }
-
-
+ compareWith(clientup,client){
+   return clientup.cinMF === client.cinMF
+ }
   
   loadbc(item:any){
-    this._id=item._id;
+    this.id=item.id;
     this.clientup=item.client
-    this.statutup=item.statut
-    this.prixup=item.prix
   }
   loadArticle(item:any){
     let x = this.art.filter((i:any)=>
-      i.nom==item.article)
+      i.id==item.article)
     this.art=this.tart.filter((i:any)=>{
       let find=false
         this.articles.forEach((el:any) =>{
-          if(el.article==i.nom){
+          if(el.article==i.id){
             find=true
           }
         });
@@ -152,7 +152,7 @@ export class BcComponent implements OnInit {
     this.art=this.tart.filter((i:any)=>{
       let find=false
         this.articles.forEach((el:any) =>{
-          if(el.article==i.nom){
+          if(el.article==i.id){
             find=true
           }
         });
