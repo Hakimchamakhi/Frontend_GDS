@@ -7,8 +7,13 @@
         <th scope="col">N°BC</th>
         <th scope="col">Date</th>
         <th scope="col">Client</th>
+<<<<<<< HEAD
         <th scope="col">Articles</th>
         <th scope="col">statut</th>
+=======
+        <th scope="col">Statut</th>
+        <th scope="col">Article</th>
+>>>>>>> f90c7ed7e43bc00613f636ec612b3b68821b3ae0
         <th scope="col">Prix TTC</th>
         <th scope="col">Actions</th>
       </tr>
@@ -22,6 +27,10 @@
           {{i.nom}},
         </span></td>
         <td>{{item.statut}}</td>
+        <td><span *ngFor="let i of item.article">
+          {{i.nom}},
+        </span></td>
+
         <td>{{item.prixTtc}}</td>
 
         <td><a (click)="deletebc(item._id)">
