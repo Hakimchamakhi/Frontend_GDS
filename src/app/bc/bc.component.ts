@@ -11,7 +11,12 @@ import { ClientService } from '../services/client.service';
   styleUrls: ['./bc.component.css']
 })
 export class BcComponent implements OnInit {
-
+  popoverTitle = 'Suppression de Bon commande';
+  popoverMessage = 'Voulez-vous vraiment le supprimer ?  ';
+  confirmClicked = false;
+  cancelClicked = false;
+  confirmText = 'Oui';
+  cancelText = 'annuler';
   constructor(private service: BcService, private service2: ClientService, private service3: ArticleService) { }
   faTrashAlt= faTrashAlt;
   faEdit=faEdit;
@@ -42,6 +47,7 @@ export class BcComponent implements OnInit {
   remiseTotal:any;
   qtTotal:any;
   bcdata:any;
+
   ngOnInit(): void {
     this.getbc()
     this.getArticle()
@@ -74,6 +80,8 @@ export class BcComponent implements OnInit {
   getArticle(){
     this.service3.getall().subscribe(data=>{
       this.tart=data.data
+      console.log(data);
+      
       this.art=this.tart;
     },error=>{
       console.log(error);
@@ -106,12 +114,14 @@ export class BcComponent implements OnInit {
     this.prixup=item.prix
   }
   loadArticle(item:any){
+    console.log(item);
+    
     let x = this.art.filter((i:any)=>
-      i.nom==item.article)
+      i.id==item.article)
     this.art=this.tart.filter((i:any)=>{
       let find=false
         this.articles.forEach((el:any) =>{
-          if(el.article==i.nom){
+          if(el.article==i.id){
             find=true
           }
         });
@@ -123,7 +133,6 @@ export class BcComponent implements OnInit {
   }
 
   addbc(){
-
     const sum = this.articles.reduce((sum, current) => sum + Number(current.quantite),0);
     const body = {nbc:sum+"dfsd",client_id:this.client, articles:this.articles, prixTtc:this.prixTTC, prixHt:this.prixHT,tvaTotal:this.sumtva,remise:this.remiseTotal}
     console.log(body);
@@ -152,7 +161,7 @@ export class BcComponent implements OnInit {
     this.art=this.tart.filter((i:any)=>{
       let find=false
         this.articles.forEach((el:any) =>{
-          if(el.article==i.nom){
+          if(el.article==i.id){
             find=true
           }
         });
@@ -164,7 +173,16 @@ export class BcComponent implements OnInit {
   updatebc(){
  
   }
+ delete(id){
+   this.service.delete(id).subscribe(data=>{
+     console.log(data);
+     this.getbc();
+   },error=>{
 
+   });
+   
+
+ }
   deletebc(_id:any){
 
   }

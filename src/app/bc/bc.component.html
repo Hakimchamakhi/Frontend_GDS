@@ -25,15 +25,21 @@
 
         <td>{{item.prixTtc}}</td>
 
-        <td><a (click)="deletebc(item._id)">
-            <fa-icon [icon]="faTrashAlt"></fa-icon>
-          </a>
-          <a data-bs-toggle="modal" data-bs-target="#updateModal" (click)="loadbc(item)">
-            <fa-icon [icon]="faEdit"></fa-icon>
-          </a>
-          <a data-bs-toggle="modal" data-bs-target="#updateModal" (click)="loadbc(item)">
-            <fa-icon [icon]="faInfoCircle"></fa-icon>
-          </a>
+        <td>
+          <button  color="warn" style="color: #ff0404;
+          border: 0px;
+          background-color: white;" mwlConfirmationPopover
+          [popoverTitle]="popoverTitle"
+          [popoverMessage]="popoverMessage"
+        placement="left"
+        [confirmText]="confirmText"
+        [cancelText]="cancelText"
+          (confirm)="delete(item.id)"
+          (cancel)="cancelClicked = true" ><fa-icon [icon]="faTrashAlt" style="    color: red;
+          "></fa-icon></button>
+
+ <button style="background-color: white; border: 0px;" data-bs-toggle="modal" data-bs-target="#exampleModal2"  ><fa-icon [icon]="faEdit" style="    color: green;"></fa-icon></button>
+
         </td>
       </tr>
     </tbody>
@@ -139,29 +145,98 @@
     </div>
   </div>
 
-  <!--<div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="updateModalLabel">Modifier une Bon de Commande</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+  <div class="modal fade " id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+    <div class="modal-dialog modal-xl" >
+      <div class="modal-content" >
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Ajouter une Bon de Commande</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col">
+              <div><p style="padding: 9px;
+                    background-color: #6c757d;
+                    color: white;">Entête bon de commande</p></div>
+            
+            <table class="table table-bordered">
+              <tbody>
+                <tr>
+                  <td>Numero bon commande : </td>
+                  <td>Date : </td>
+                </tr>
+                <tr>
+                  <td>Client : </td>
+                  <td>Thornton</td>
+                  <td>@fat</td>
+                </tr>
+              </tbody>
+            </table>
+
+          <div class="row">
+            <div class="col-8">
+              <p style="padding: 9px;
+              background-color: #6c757d;
+              color: white;">Detailes articles</p>
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th scope="col">Nom</th>
+                    <th scope="col">Unité</th>
+                    <th scope="col">Famille</th>
+                    <th scope="col">Prix d'achat</th>
+                    <th scope="col">Prix de vente</th>
+                    <th scope="col">Marge</th>
+                    <th scope="col">tva</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Mark</td>
+                    <td>Otto</td>
+                    <td>@mdo</td>
+                    <td>@mdo</td>
+                    <td>@mdo</td>
+                    <td>@mdo</td>
+                    <td>@mdo</td>
+
+                  </tr>
+                 
+                
+                </tbody>
+              </table>
             </div>
-            <div class="modal-body">
-                <label><b>N°BC</b></label>
-                <input type="text" placeholder="Entrer le N° de Bon de Commande" name="nbc" [(ngModel)]="nbcup" required><br>
-                <label><b>Client</b></label>
-                <input type="text" placeholder="Entrer le Client" name="client" [(ngModel)]="clientup" required><br>
-                <label><b>statut</b></label>
-                <input type="text" placeholder="Entrer la statut" name="statut" [(ngModel)]="statutup" required><br>
-                <label><b>Prix</b></label>
-                <input type="text" placeholder="Entrer le prix" name="prix" [(ngModel)]="prixup" required><br>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-              <button type="button" class="btn btn-primary" (click)="updatebc()" data-bs-dismiss="modal">Modifier</button>
+            <div class="col-4">
+              <p style="padding: 9px;
+              background-color: #6c757d;
+              color: white;">Information prix</p>
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th scope="col">Prix Hors taxe </th>
+                    <th scope="col">Prix totale </th>
+                    <th scope="col">Tva Total </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Mark</td>
+                    <td>Otto</td>
+                    <td>@mdo</td>
+                  </tr>
+                </tbody>
+              </table>
+
             </div>
           </div>
         </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+          <button type="button" class="btn btn-primary" (click)="addbc()" data-bs-dismiss="modal">Ajouter</button>
+        </div>
+      </div>
     </div>
-    -->
+  </div>
 </div>
+

@@ -23,6 +23,8 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { FamilleArticleComponent } from './famille-article/famille-article.component';
 import { HomeappComponent } from './homeapp/homeapp.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ConfirmationPopoverModule } from 'angular-confirmation-popover';
+
 
 
 @NgModule({
@@ -52,7 +54,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     HttpClientModule,
     FormsModule,
     NgSelectModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    ConfirmationPopoverModule.forRoot({
+      confirmButtonType: 'danger', // set defaults here
+    }),
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [],

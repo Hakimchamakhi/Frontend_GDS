@@ -21,5 +21,13 @@ export class BcService {
     return this.http.get(this.AUTH_API + '/getall', httpOptions);
   }
 
+  delete(id): Observable<any> {
+    return this.http.delete(this.AUTH_API + '/delete/'+id, httpOptions);
+  }
+
+  
+  get(id): Observable<any> {
+    return this.http.get(this.AUTH_API + '/get/'+id, httpOptions);
+  }
 
 }
