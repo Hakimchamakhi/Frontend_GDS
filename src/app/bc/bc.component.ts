@@ -31,6 +31,7 @@ export class BcComponent implements OnInit {
   prixup:any;
   articles:any=[]
   articlesup:any=[]
+  temparticlesup:any;
   prixHT:any;
   sumtva:any
   prixTTC:any
@@ -43,6 +44,7 @@ export class BcComponent implements OnInit {
   remiseTotal:any;
   qtTotal:any;
   bcdata:any;
+  bcdataup:any;
   ngOnInit(): void {
     this.getbc()
     this.getArticle()
@@ -102,8 +104,20 @@ export class BcComponent implements OnInit {
  }
   
   loadbc(item:any){
+    this.service.get(item.id).subscribe(data=>{
+      this.bcdataup=data;
+      this.temparticlesup=this.bcdataup.data.articles
+      console.log(this.temparticlesup)
+      this.temparticlesup.map((i:any)=>{
+        this.articlesup.push(i.BcArticle)
+      })
+      
+    },error=>{
+      console.log(error);
+    })
     this.id=item.id;
     this.clientup=item.client
+    
   }
   loadArticle(item:any){
     let x = this.art.filter((i:any)=>

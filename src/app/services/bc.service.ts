@@ -21,5 +21,9 @@ export class BcService {
     return this.http.get(this.AUTH_API + '/getall', httpOptions);
   }
 
+  get(id) {
+    return this.http.get(this.AUTH_API + '/get/'+id, httpOptions);
+  }
+
 
 }

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { faTrashAlt, faEdit } from '@fortawesome/free-solid-svg-icons';
 import { ClientService } from '../services/client.service';
-import { TestserviceService } from '../services/testservice.service';
 import { TokenStorageService } from '../services/token-storage.service';
 
 @Component({
