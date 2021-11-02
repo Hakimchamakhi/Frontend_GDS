@@ -8,6 +8,7 @@
         <th scope="col">Date</th>
         <th scope="col">Client</th>
         <th scope="col">Statut</th>
+        <th scope="col">Article</th>
         <th scope="col">Prix TTC</th>
         <th scope="col">Actions</th>
       </tr>
@@ -18,6 +19,10 @@
         <td>{{item.createdAt | date}}</td>
         <td>{{item.client.cinMF}}</td>
         <td>{{item.statut}}</td>
+        <td><span *ngFor="let i of item.article">
+          {{i.nom}},
+        </span></td>
+
         <td>{{item.prixTtc}}</td>
 
         <td><a (click)="deletebc(item._id)">
