@@ -25,7 +25,7 @@
 
         <td>{{item.prixTtc}}</td>
 
-        <td><a (click)="deletebc(item._id)">
+        <td><a (click)="deletebc(item.id)">
             <fa-icon [icon]="faTrashAlt"></fa-icon>
           </a>
           <a data-bs-toggle="modal" data-bs-target="#updateModal" (click)="loadbc(item)">
@@ -150,7 +150,7 @@
           <label><b>Client</b></label>
           <ng-select [(ngModel)]="clientup" [items]="clients" bindLabel="cinMF" bindValue="id"  [compareWith]="compareWith"></ng-select>
           <div *ngIf="clientup">
-            <h1><button type="button" class="btn btn-primary" (click)="addLine()">Ajouter Article</button>
+            <h1><button type="button" class="btn btn-primary" (click)="addLineup()">Ajouter Article</button>
             </h1>
             <table class="table">
               <thead>
@@ -165,14 +165,14 @@
               </thead>
               <tbody>
                 <tr *ngFor="let item of articlesup">
-                  <th scope="row"><ng-select [(ngModel)]="item.article" [items]="art" bindLabel="nom" bindValue="id"  (change)="loadArticle(item)"></ng-select></th>
-                  <td><input type="text" name="quantite" [(ngModel)]="item.quantite" (change)="sumprix()" required></td>
-                  <td><input type="text" name="prix" [(ngModel)]="item.prix" (change)="sumprix()" required ></td>
-                  <td><input type="text" name="tva" [(ngModel)]="item.tva" (change)="sumprix()" required></td>
-                  <td><input type="text" name="remise" [(ngModel)]="item.remise" (change)="sumprix()" required></td>
+                  <th scope="row"><ng-select [(ngModel)]="item.article_id" [items]="art" bindLabel="nom" bindValue="id" (open)="initArt()" (change)="loadArticleup(item)"></ng-select></th>
+                  <td><input type="text" name="quantite" [(ngModel)]="item.qt" (change)="sumprixup()" required></td>
+                  <td><input type="text" name="prix" [(ngModel)]="item.prixv" (change)="sumprixup()" required ></td>
+                  <td><input type="text" name="tva" [(ngModel)]="item.tva" (change)="sumprixup()" required></td>
+                  <td><input type="text" name="remise" [(ngModel)]="item.remise" (change)="sumprixup()" required></td>
 
                   <td>
-                    <a><fa-icon [icon]="faTrashAlt" (click)="deleteLine(item)"></fa-icon></a>
+                    <a><fa-icon [icon]="faTrashAlt" (click)="deleteLineup(item)"></fa-icon></a>
                   </td>
                 </tr>
 
@@ -224,10 +224,10 @@
               </table>
             </div>
             <div>
-              <label>Prix HT: {{prixHT||0}} DT </label><br>
-              <label>TVA : {{sumtva||0}} DT </label><br>
-              <label>Remise : {{remiseTotal||0}} DT</label><br>
-              <label>Prix TTC: {{prixTTC||0}} DT </label>
+              <label>Prix HT: {{prixHT.toFixed(3)||0}} DT </label><br>
+              <label>TVA : {{sumtva.toFixed(3)||0}} DT </label><br>
+              <label>Remise : {{remiseTotal.toFixed(3)||0}} DT</label><br>
+              <label>Prix TTC: {{prixTTC.toFixed(3)||0}} DT </label>
             </div>
           </div>
         </div>
